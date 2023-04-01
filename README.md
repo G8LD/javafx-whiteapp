@@ -1,17 +1,55 @@
-package fr.an.tests.javafxwhiteapp.ui;
 
+# A Minimalist javafx white App
+
+![](whiteapp-screenshot.png)
+
+
+it contains:
+
+javafx dependency in maven pom.xml, mainly: 
+
+```
+<dependency>
+  <groupId>org.openjfx</groupId>
+  <artifactId>javafx-controls</artifactId>
+  <version>${javafx.version}</version>
+</dependency>
+```
+
+a java Main to run :
+
+```
+import fr.an.tests.javafxwhiteapp.ui.SimpleApp;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+
+public class SimpleAppMain {
+	public static void main(String[] args) {
+		Application.launch(SimpleApp.class, args);
+	}
+}
+```
+
+a javafx Application with 
+
+```
+ MenuBar 
+   -> "File" Menu 
+     -> "Open" MenuItem
+     -> "Save" MenuItem
+ Toolbar
+   -> a Button
+ a SplitPane
+   -> View1 on left 
+   -> View2 on right
+```
+
+See code:
+```
+import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+..
 
 public class SimpleApp extends Application {
 
@@ -58,3 +96,5 @@ public class SimpleApp extends Application {
     }
 
 }
+```
+
