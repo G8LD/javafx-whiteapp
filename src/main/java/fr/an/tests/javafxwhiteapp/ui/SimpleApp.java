@@ -1,6 +1,13 @@
 package fr.an.tests.javafxwhiteapp.ui;
 
+import fr.an.tests.javafxwhiteapp.model.BaseDrawingElements;
+import fr.an.tests.javafxwhiteapp.model.DrawingDocModel;
+import fr.an.tests.javafxwhiteapp.model.DrawingElement;
+import fr.an.tests.javafxwhiteapp.model.DrawingPt;
+import fr.an.tests.javafxwhiteapp.view.CanvasDrawingView;
+import fr.an.tests.javafxwhiteapp.view.TextDrawingView;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
@@ -41,20 +48,32 @@ public class SimpleApp extends Application {
     	}
     	mainBorderPanel.setTop(menuAndToolbar);
 
-    	{ // SplitPane( view1 | view2 )
-	    	VBox view1 = new VBox();
-	    	view1.getChildren().add(new Text("Hello 1"));
-	
-	    	VBox view2 = new VBox();
-			view2.getChildren().add(new Text("Hello 2"));
-	 
-			SplitPane splitViewPane = new SplitPane(view1, view2);
+		DrawingDocModel model = new DrawingDocModel();
+		DrawingElement content = createSimpleDrawing();
+		model.setContent(content);
+		{ // SplitPane( view1 | view2 )
+			TextDrawingView view1 = new TextDrawingView(model);
+			Node view1Comp = view1.getComponent();
+			CanvasDrawingView view2 = new CanvasDrawingView(model);
+			Node view2Comp = view2.getComponent();
+			SplitPane splitViewPane = new SplitPane(view1Comp, view2Comp);
 			mainBorderPanel.setCenter(splitViewPane);
-    	}
-    	
+		}
+
 		Scene scene = new Scene(mainBorderPanel, 640, 480);
         stage.setScene(scene);
         stage.show();
     }
 
+	public BaseDrawingElements.GroupDrawingElement createSimpleDrawing() {
+		BaseDrawingElements.TextDrawingElement text = new BaseDrawingElements.TextDrawingElement("Hello", new DrawingPt(100, 100));
+		BaseDrawingElements.LineDrawingElement line = new BaseDrawingElements.LineDrawingElement(new DrawingPt(100, 130),
+				new DrawingPt(200, 230));
+		BaseDrawingElements.RectangleDrawingElement rectangle = new BaseDrawingElements.RectangleDrawingElement(
+				new DrawingPt(100, 300), new DrawingPt(200, 350));
+		BaseDrawingElements.CircleDrawingElement circle = new BaseDrawingElements.CircleDrawingElement(new DrawingPt(150, 400), 45);
+		BaseDrawingElements.GroupDrawingElement res = new BaseDrawingElements.GroupDrawingElement();
+		res.addAll(text, line, rectangle, circle);
+		return res;
+	}
 }
